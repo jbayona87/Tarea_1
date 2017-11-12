@@ -1,0 +1,633 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="UniversidadModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Alumnos">
+          <Key>
+            <PropertyRef Name="Codigo" />
+            <PropertyRef Name="Numero_Identidad" />
+          </Key>
+          <Property Name="Codigo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombres" Type="nvarchar(max)" />
+          <Property Name="Apellido_Paterno" Type="nvarchar(max)" />
+          <Property Name="Apellido_Materno" Type="nvarchar(max)" />
+          <Property Name="Numero_Identidad" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Fecha_Nacimiento" Type="datetime" />
+          <Property Name="Pais" Type="nvarchar" MaxLength="50" />
+          <Property Name="Direccion" Type="nvarchar(max)" />
+          <Property Name="Distrito" Type="nvarchar(max)" />
+          <Property Name="Estado_Civil" Type="char" MaxLength="1" />
+          <Property Name="Telefono" Type="varchar" MaxLength="20" />
+          <Property Name="FacultadId" Type="int" />
+          <Property Name="CarreraId" Type="int" />
+          <Property Name="Fecha_Registro" Type="datetime" />
+          <Property Name="EstadoId" Type="char" MaxLength="2" />
+        </EntityType>
+        <EntityType Name="Carreras">
+          <Key>
+            <PropertyRef Name="Codigo" />
+          </Key>
+          <Property Name="Codigo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Carrera" Type="nvarchar" MaxLength="300" />
+          <Property Name="Descripcion" Type="nvarchar(max)" />
+          <Property Name="EstadoId" Type="char" MaxLength="2" />
+          <Property Name="Fecha_Registro" Type="datetime" />
+          <Property Name="FacultadId" Type="int" />
+        </EntityType>
+        <EntityType Name="Cursos">
+          <Key>
+            <PropertyRef Name="Codigo" />
+          </Key>
+          <Property Name="Codigo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Curso" Type="nvarchar" MaxLength="300" />
+          <Property Name="Descripcion" Type="nvarchar(max)" />
+          <Property Name="Creditos" Type="int" />
+          <Property Name="EstadoId" Type="char" MaxLength="2" />
+          <Property Name="Fecha_Registro" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Estados">
+          <Key>
+            <PropertyRef Name="Codigo" />
+          </Key>
+          <Property Name="Codigo" Type="char" MaxLength="2" Nullable="false" />
+          <Property Name="Estado" Type="nvarchar" MaxLength="50" />
+          <Property Name="Descriocion" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Facultades">
+          <Key>
+            <PropertyRef Name="Codigo" />
+          </Key>
+          <Property Name="Codigo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Facultad" Type="nvarchar" MaxLength="300" />
+          <Property Name="Descripcion" Type="nvarchar(max)" />
+          <Property Name="EstadoId" Type="char" MaxLength="2" />
+          <Property Name="Fecha_Registro" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Profesores">
+          <Key>
+            <PropertyRef Name="Codigo" />
+            <PropertyRef Name="Numero_Identidad" />
+          </Key>
+          <Property Name="Codigo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombres" Type="nvarchar(max)" />
+          <Property Name="Apellido_Paterno" Type="nvarchar(max)" />
+          <Property Name="Apellido_Materno" Type="nvarchar(max)" />
+          <Property Name="Numero_Identidad" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Fecha_Nacimiento" Type="datetime" />
+          <Property Name="Fecha_Registro" Type="datetime" />
+          <Property Name="CarreraId" Type="int" />
+          <Property Name="FacultadId" Type="int" />
+          <Property Name="EstadoId" Type="char" MaxLength="2" />
+        </EntityType>
+        <Association Name="FK__Alumnos__Carrera__1920BF5C">
+          <End Role="Carreras" Type="Self.Carreras" Multiplicity="0..1" />
+          <End Role="Alumnos" Type="Self.Alumnos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Carreras">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Alumnos">
+              <PropertyRef Name="CarreraId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Alumnos__EstadoI__182C9B23">
+          <End Role="Facultades" Type="Self.Facultades" Multiplicity="0..1" />
+          <End Role="Alumnos" Type="Self.Alumnos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Facultades">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Alumnos">
+              <PropertyRef Name="FacultadId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Alumnos__EstadoI__1A14E395">
+          <End Role="Estados" Type="Self.Estados" Multiplicity="0..1" />
+          <End Role="Alumnos" Type="Self.Alumnos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estados">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Alumnos">
+              <PropertyRef Name="EstadoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Carreras__Facult__22AA2996">
+          <End Role="Facultades" Type="Self.Facultades" Multiplicity="0..1" />
+          <End Role="Carreras" Type="Self.Carreras" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Facultades">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Carreras">
+              <PropertyRef Name="FacultadId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Carreras__Fecha___15502E78">
+          <End Role="Estados" Type="Self.Estados" Multiplicity="0..1" />
+          <End Role="Carreras" Type="Self.Carreras" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estados">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Carreras">
+              <PropertyRef Name="EstadoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Cursos__Fecha_Re__21B6055D">
+          <End Role="Estados" Type="Self.Estados" Multiplicity="0..1" />
+          <End Role="Cursos" Type="Self.Cursos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estados">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Cursos">
+              <PropertyRef Name="EstadoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Facultade__Fecha__1273C1CD">
+          <End Role="Estados" Type="Self.Estados" Multiplicity="0..1" />
+          <End Role="Facultades" Type="Self.Facultades" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estados">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Facultades">
+              <PropertyRef Name="EstadoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Profesore__Carre__1DE57479">
+          <End Role="Carreras" Type="Self.Carreras" Multiplicity="0..1" />
+          <End Role="Profesores" Type="Self.Profesores" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Carreras">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Profesores">
+              <PropertyRef Name="CarreraId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Profesore__Estad__1CF15040">
+          <End Role="Facultades" Type="Self.Facultades" Multiplicity="0..1" />
+          <End Role="Profesores" Type="Self.Profesores" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Facultades">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Profesores">
+              <PropertyRef Name="FacultadId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Profesore__Estad__1ED998B2">
+          <End Role="Estados" Type="Self.Estados" Multiplicity="0..1" />
+          <End Role="Profesores" Type="Self.Profesores" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estados">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Profesores">
+              <PropertyRef Name="EstadoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="UniversidadModelStoreContainer">
+          <EntitySet Name="Alumnos" EntityType="Self.Alumnos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Carreras" EntityType="Self.Carreras" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Cursos" EntityType="Self.Cursos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Estados" EntityType="Self.Estados" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Facultades" EntityType="Self.Facultades" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Profesores" EntityType="Self.Profesores" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Alumnos__Carrera__1920BF5C" Association="Self.FK__Alumnos__Carrera__1920BF5C">
+            <End Role="Carreras" EntitySet="Carreras" />
+            <End Role="Alumnos" EntitySet="Alumnos" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Alumnos__EstadoI__182C9B23" Association="Self.FK__Alumnos__EstadoI__182C9B23">
+            <End Role="Facultades" EntitySet="Facultades" />
+            <End Role="Alumnos" EntitySet="Alumnos" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Alumnos__EstadoI__1A14E395" Association="Self.FK__Alumnos__EstadoI__1A14E395">
+            <End Role="Estados" EntitySet="Estados" />
+            <End Role="Alumnos" EntitySet="Alumnos" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Carreras__Facult__22AA2996" Association="Self.FK__Carreras__Facult__22AA2996">
+            <End Role="Facultades" EntitySet="Facultades" />
+            <End Role="Carreras" EntitySet="Carreras" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Carreras__Fecha___15502E78" Association="Self.FK__Carreras__Fecha___15502E78">
+            <End Role="Estados" EntitySet="Estados" />
+            <End Role="Carreras" EntitySet="Carreras" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Cursos__Fecha_Re__21B6055D" Association="Self.FK__Cursos__Fecha_Re__21B6055D">
+            <End Role="Estados" EntitySet="Estados" />
+            <End Role="Cursos" EntitySet="Cursos" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Facultade__Fecha__1273C1CD" Association="Self.FK__Facultade__Fecha__1273C1CD">
+            <End Role="Estados" EntitySet="Estados" />
+            <End Role="Facultades" EntitySet="Facultades" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Profesore__Carre__1DE57479" Association="Self.FK__Profesore__Carre__1DE57479">
+            <End Role="Carreras" EntitySet="Carreras" />
+            <End Role="Profesores" EntitySet="Profesores" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Profesore__Estad__1CF15040" Association="Self.FK__Profesore__Estad__1CF15040">
+            <End Role="Facultades" EntitySet="Facultades" />
+            <End Role="Profesores" EntitySet="Profesores" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Profesore__Estad__1ED998B2" Association="Self.FK__Profesore__Estad__1ED998B2">
+            <End Role="Estados" EntitySet="Estados" />
+            <End Role="Profesores" EntitySet="Profesores" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="UniversidadModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Alumnos">
+          <Key>
+            <PropertyRef Name="Codigo" />
+            <PropertyRef Name="Numero_Identidad" />
+          </Key>
+          <Property Name="Codigo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombres" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Apellido_Paterno" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Apellido_Materno" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Numero_Identidad" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Fecha_Nacimiento" Type="DateTime" Precision="3" />
+          <Property Name="Pais" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Direccion" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Distrito" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Estado_Civil" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="Telefono" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="FacultadId" Type="Int32" />
+          <Property Name="CarreraId" Type="Int32" />
+          <Property Name="Fecha_Registro" Type="DateTime" Precision="3" />
+          <Property Name="EstadoId" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="Carreras" Relationship="Self.FK__Alumnos__Carrera__1920BF5C" FromRole="Alumnos" ToRole="Carreras" />
+          <NavigationProperty Name="Facultades" Relationship="Self.FK__Alumnos__EstadoI__182C9B23" FromRole="Alumnos" ToRole="Facultades" />
+          <NavigationProperty Name="Estados" Relationship="Self.FK__Alumnos__EstadoI__1A14E395" FromRole="Alumnos" ToRole="Estados" />
+        </EntityType>
+        <EntityType Name="Carreras">
+          <Key>
+            <PropertyRef Name="Codigo" />
+          </Key>
+          <Property Name="Codigo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Carrera" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="Descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="EstadoId" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="Fecha_Registro" Type="DateTime" Precision="3" />
+          <Property Name="FacultadId" Type="Int32" />
+          <NavigationProperty Name="Alumnos" Relationship="Self.FK__Alumnos__Carrera__1920BF5C" FromRole="Carreras" ToRole="Alumnos" />
+          <NavigationProperty Name="Facultades" Relationship="Self.FK__Carreras__Facult__22AA2996" FromRole="Carreras" ToRole="Facultades" />
+          <NavigationProperty Name="Estados" Relationship="Self.FK__Carreras__Fecha___15502E78" FromRole="Carreras" ToRole="Estados" />
+          <NavigationProperty Name="Profesores" Relationship="Self.FK__Profesore__Carre__1DE57479" FromRole="Carreras" ToRole="Profesores" />
+        </EntityType>
+        <EntityType Name="Cursos">
+          <Key>
+            <PropertyRef Name="Codigo" />
+          </Key>
+          <Property Name="Codigo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Curso" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="Descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Creditos" Type="Int32" />
+          <Property Name="EstadoId" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="Fecha_Registro" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Estados" Relationship="Self.FK__Cursos__Fecha_Re__21B6055D" FromRole="Cursos" ToRole="Estados" />
+        </EntityType>
+        <EntityType Name="Estados">
+          <Key>
+            <PropertyRef Name="Codigo" />
+          </Key>
+          <Property Name="Codigo" Type="String" MaxLength="2" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Estado" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Descriocion" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Alumnos" Relationship="Self.FK__Alumnos__EstadoI__1A14E395" FromRole="Estados" ToRole="Alumnos" />
+          <NavigationProperty Name="Carreras" Relationship="Self.FK__Carreras__Fecha___15502E78" FromRole="Estados" ToRole="Carreras" />
+          <NavigationProperty Name="Cursos" Relationship="Self.FK__Cursos__Fecha_Re__21B6055D" FromRole="Estados" ToRole="Cursos" />
+          <NavigationProperty Name="Facultades" Relationship="Self.FK__Facultade__Fecha__1273C1CD" FromRole="Estados" ToRole="Facultades" />
+          <NavigationProperty Name="Profesores" Relationship="Self.FK__Profesore__Estad__1ED998B2" FromRole="Estados" ToRole="Profesores" />
+        </EntityType>
+        <EntityType Name="Facultades">
+          <Key>
+            <PropertyRef Name="Codigo" />
+          </Key>
+          <Property Name="Codigo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Facultad" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="Descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="EstadoId" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="Fecha_Registro" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Alumnos" Relationship="Self.FK__Alumnos__EstadoI__182C9B23" FromRole="Facultades" ToRole="Alumnos" />
+          <NavigationProperty Name="Carreras" Relationship="Self.FK__Carreras__Facult__22AA2996" FromRole="Facultades" ToRole="Carreras" />
+          <NavigationProperty Name="Estados" Relationship="Self.FK__Facultade__Fecha__1273C1CD" FromRole="Facultades" ToRole="Estados" />
+          <NavigationProperty Name="Profesores" Relationship="Self.FK__Profesore__Estad__1CF15040" FromRole="Facultades" ToRole="Profesores" />
+        </EntityType>
+        <EntityType Name="Profesores">
+          <Key>
+            <PropertyRef Name="Codigo" />
+            <PropertyRef Name="Numero_Identidad" />
+          </Key>
+          <Property Name="Codigo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombres" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Apellido_Paterno" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Apellido_Materno" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Numero_Identidad" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Fecha_Nacimiento" Type="DateTime" Precision="3" />
+          <Property Name="Fecha_Registro" Type="DateTime" Precision="3" />
+          <Property Name="CarreraId" Type="Int32" />
+          <Property Name="FacultadId" Type="Int32" />
+          <Property Name="EstadoId" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="Carreras" Relationship="Self.FK__Profesore__Carre__1DE57479" FromRole="Profesores" ToRole="Carreras" />
+          <NavigationProperty Name="Estados" Relationship="Self.FK__Profesore__Estad__1ED998B2" FromRole="Profesores" ToRole="Estados" />
+          <NavigationProperty Name="Facultades" Relationship="Self.FK__Profesore__Estad__1CF15040" FromRole="Profesores" ToRole="Facultades" />
+        </EntityType>
+        <Association Name="FK__Alumnos__Carrera__1920BF5C">
+          <End Role="Carreras" Type="Self.Carreras" Multiplicity="0..1" />
+          <End Role="Alumnos" Type="Self.Alumnos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Carreras">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Alumnos">
+              <PropertyRef Name="CarreraId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Alumnos__EstadoI__182C9B23">
+          <End Role="Facultades" Type="Self.Facultades" Multiplicity="0..1" />
+          <End Role="Alumnos" Type="Self.Alumnos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Facultades">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Alumnos">
+              <PropertyRef Name="FacultadId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Alumnos__EstadoI__1A14E395">
+          <End Role="Estados" Type="Self.Estados" Multiplicity="0..1" />
+          <End Role="Alumnos" Type="Self.Alumnos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estados">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Alumnos">
+              <PropertyRef Name="EstadoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Carreras__Facult__22AA2996">
+          <End Role="Facultades" Type="Self.Facultades" Multiplicity="0..1" />
+          <End Role="Carreras" Type="Self.Carreras" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Facultades">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Carreras">
+              <PropertyRef Name="FacultadId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Carreras__Fecha___15502E78">
+          <End Role="Estados" Type="Self.Estados" Multiplicity="0..1" />
+          <End Role="Carreras" Type="Self.Carreras" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estados">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Carreras">
+              <PropertyRef Name="EstadoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Profesore__Carre__1DE57479">
+          <End Role="Carreras" Type="Self.Carreras" Multiplicity="0..1" />
+          <End Role="Profesores" Type="Self.Profesores" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Carreras">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Profesores">
+              <PropertyRef Name="CarreraId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Cursos__Fecha_Re__21B6055D">
+          <End Role="Estados" Type="Self.Estados" Multiplicity="0..1" />
+          <End Role="Cursos" Type="Self.Cursos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estados">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Cursos">
+              <PropertyRef Name="EstadoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Facultade__Fecha__1273C1CD">
+          <End Role="Estados" Type="Self.Estados" Multiplicity="0..1" />
+          <End Role="Facultades" Type="Self.Facultades" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estados">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Facultades">
+              <PropertyRef Name="EstadoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Profesore__Estad__1ED998B2">
+          <End Role="Estados" Type="Self.Estados" Multiplicity="0..1" />
+          <End Role="Profesores" Type="Self.Profesores" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estados">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Profesores">
+              <PropertyRef Name="EstadoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Profesore__Estad__1CF15040">
+          <End Role="Facultades" Type="Self.Facultades" Multiplicity="0..1" />
+          <End Role="Profesores" Type="Self.Profesores" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Facultades">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Profesores">
+              <PropertyRef Name="FacultadId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="UniversidadEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Alumnos" EntityType="Self.Alumnos" />
+          <EntitySet Name="Carreras" EntityType="Self.Carreras" />
+          <EntitySet Name="Cursos" EntityType="Self.Cursos" />
+          <EntitySet Name="Estados" EntityType="Self.Estados" />
+          <EntitySet Name="Facultades" EntityType="Self.Facultades" />
+          <EntitySet Name="Profesores" EntityType="Self.Profesores" />
+          <AssociationSet Name="FK__Alumnos__Carrera__1920BF5C" Association="Self.FK__Alumnos__Carrera__1920BF5C">
+            <End Role="Carreras" EntitySet="Carreras" />
+            <End Role="Alumnos" EntitySet="Alumnos" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Alumnos__EstadoI__182C9B23" Association="Self.FK__Alumnos__EstadoI__182C9B23">
+            <End Role="Facultades" EntitySet="Facultades" />
+            <End Role="Alumnos" EntitySet="Alumnos" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Alumnos__EstadoI__1A14E395" Association="Self.FK__Alumnos__EstadoI__1A14E395">
+            <End Role="Estados" EntitySet="Estados" />
+            <End Role="Alumnos" EntitySet="Alumnos" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Carreras__Facult__22AA2996" Association="Self.FK__Carreras__Facult__22AA2996">
+            <End Role="Facultades" EntitySet="Facultades" />
+            <End Role="Carreras" EntitySet="Carreras" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Carreras__Fecha___15502E78" Association="Self.FK__Carreras__Fecha___15502E78">
+            <End Role="Estados" EntitySet="Estados" />
+            <End Role="Carreras" EntitySet="Carreras" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Profesore__Carre__1DE57479" Association="Self.FK__Profesore__Carre__1DE57479">
+            <End Role="Carreras" EntitySet="Carreras" />
+            <End Role="Profesores" EntitySet="Profesores" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Cursos__Fecha_Re__21B6055D" Association="Self.FK__Cursos__Fecha_Re__21B6055D">
+            <End Role="Estados" EntitySet="Estados" />
+            <End Role="Cursos" EntitySet="Cursos" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Facultade__Fecha__1273C1CD" Association="Self.FK__Facultade__Fecha__1273C1CD">
+            <End Role="Estados" EntitySet="Estados" />
+            <End Role="Facultades" EntitySet="Facultades" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Profesore__Estad__1ED998B2" Association="Self.FK__Profesore__Estad__1ED998B2">
+            <End Role="Estados" EntitySet="Estados" />
+            <End Role="Profesores" EntitySet="Profesores" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Profesore__Estad__1CF15040" Association="Self.FK__Profesore__Estad__1CF15040">
+            <End Role="Facultades" EntitySet="Facultades" />
+            <End Role="Profesores" EntitySet="Profesores" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="UniversidadModelStoreContainer" CdmEntityContainer="UniversidadEntities">
+          <EntitySetMapping Name="Alumnos">
+            <EntityTypeMapping TypeName="UniversidadModel.Alumnos">
+              <MappingFragment StoreEntitySet="Alumnos">
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+                <ScalarProperty Name="Nombres" ColumnName="Nombres" />
+                <ScalarProperty Name="Apellido_Paterno" ColumnName="Apellido_Paterno" />
+                <ScalarProperty Name="Apellido_Materno" ColumnName="Apellido_Materno" />
+                <ScalarProperty Name="Numero_Identidad" ColumnName="Numero_Identidad" />
+                <ScalarProperty Name="Fecha_Nacimiento" ColumnName="Fecha_Nacimiento" />
+                <ScalarProperty Name="Pais" ColumnName="Pais" />
+                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+                <ScalarProperty Name="Distrito" ColumnName="Distrito" />
+                <ScalarProperty Name="Estado_Civil" ColumnName="Estado_Civil" />
+                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+                <ScalarProperty Name="FacultadId" ColumnName="FacultadId" />
+                <ScalarProperty Name="CarreraId" ColumnName="CarreraId" />
+                <ScalarProperty Name="Fecha_Registro" ColumnName="Fecha_Registro" />
+                <ScalarProperty Name="EstadoId" ColumnName="EstadoId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Carreras">
+            <EntityTypeMapping TypeName="UniversidadModel.Carreras">
+              <MappingFragment StoreEntitySet="Carreras">
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+                <ScalarProperty Name="Carrera" ColumnName="Carrera" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="EstadoId" ColumnName="EstadoId" />
+                <ScalarProperty Name="Fecha_Registro" ColumnName="Fecha_Registro" />
+                <ScalarProperty Name="FacultadId" ColumnName="FacultadId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Cursos">
+            <EntityTypeMapping TypeName="UniversidadModel.Cursos">
+              <MappingFragment StoreEntitySet="Cursos">
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+                <ScalarProperty Name="Curso" ColumnName="Curso" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Creditos" ColumnName="Creditos" />
+                <ScalarProperty Name="EstadoId" ColumnName="EstadoId" />
+                <ScalarProperty Name="Fecha_Registro" ColumnName="Fecha_Registro" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Estados">
+            <EntityTypeMapping TypeName="UniversidadModel.Estados">
+              <MappingFragment StoreEntitySet="Estados">
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="Descriocion" ColumnName="Descriocion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Facultades">
+            <EntityTypeMapping TypeName="UniversidadModel.Facultades">
+              <MappingFragment StoreEntitySet="Facultades">
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+                <ScalarProperty Name="Facultad" ColumnName="Facultad" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="EstadoId" ColumnName="EstadoId" />
+                <ScalarProperty Name="Fecha_Registro" ColumnName="Fecha_Registro" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Profesores">
+            <EntityTypeMapping TypeName="UniversidadModel.Profesores">
+              <MappingFragment StoreEntitySet="Profesores">
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+                <ScalarProperty Name="Nombres" ColumnName="Nombres" />
+                <ScalarProperty Name="Apellido_Paterno" ColumnName="Apellido_Paterno" />
+                <ScalarProperty Name="Apellido_Materno" ColumnName="Apellido_Materno" />
+                <ScalarProperty Name="Numero_Identidad" ColumnName="Numero_Identidad" />
+                <ScalarProperty Name="Fecha_Nacimiento" ColumnName="Fecha_Nacimiento" />
+                <ScalarProperty Name="Fecha_Registro" ColumnName="Fecha_Registro" />
+                <ScalarProperty Name="CarreraId" ColumnName="CarreraId" />
+                <ScalarProperty Name="FacultadId" ColumnName="FacultadId" />
+                <ScalarProperty Name="EstadoId" ColumnName="EstadoId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
